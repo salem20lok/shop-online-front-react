@@ -1,2 +1,15 @@
 {
+  "login.title": "تسجيل الدخول",
+  "login.email": "البريد الإلكتروني",
+  "login.password": " كلمه السر",
+  "login.btnSend": "تسجيل الدخول",
+  "login.register": "إنشاء حساب جديد؟",
+  "login.forget": "نسيت كلمة المرور؟",
+  "register.title": "تسجيل ",
+  "Back.to.Login": "العودة إلى تسجيل الدخول",
+  "register.firstName": "الاسم الاول",
+  "register.lastName": "الاسم الاخير",
+  "register.phone": "هاتف",
+  "forgetPassword.title": "نسيت كلمة المرور",
+  "reset.password": "إعادة تعيين كلمة المرور"
 }

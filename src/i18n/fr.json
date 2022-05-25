@@ -1,8 +1,15 @@
 {
-  "login.title": "Login",
+  "login.title": "connexion",
   "login.email": "email",
   "login.password": "mot de passe ",
   "login.btnSend": "connexion",
-  "login.": "",
-  "login.": ""
+  "login.register": "Créer un nouveau compte?",
+  "login.forget": "mot de passe oublié?",
+  "register.title": "S'inscrire",
+  "Back.to.Login": "Retour connexion",
+  "register.firstName": "Prénom",
+  "register.lastName": "nom de famille",
+  "register.phone": "téléphone",
+  "forgetPassword.title": "oublier mot de passe",
+  "reset.password": "change mot de passe"
 }

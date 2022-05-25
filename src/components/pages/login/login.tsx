@@ -148,7 +148,7 @@ const Login = () => {
                       onClick={() => setShowPassword(!showPassword)}
                       edge="end"
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -157,8 +157,12 @@ const Login = () => {
             </FormControl>
 
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Link to={"/register"}>Create New Account ?</Link>
-              <Link to={"/forget-password"}>Forget Password ?</Link>
+              <Link to={"/register"}>
+                <FormattedMessage id="login.register" />{" "}
+              </Link>
+              <Link to={"/forget-password"}>
+                <FormattedMessage id="login.forget" />
+              </Link>
             </Box>
 
             <Button

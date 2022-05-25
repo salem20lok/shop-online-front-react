@@ -1,2 +1,15 @@
 {
+  "login.title": "Login",
+  "login.email": "email",
+  "login.password": "Password",
+  "login.btnSend": "Login",
+  "login.register": "Create New Account? ",
+  "login.forget": "Forget Password?",
+  "register.title": "Register",
+  "Back.to.Login": "Back.to.Login",
+  "register.firstName": "firstName",
+  "register.lastName": "lastName",
+  "register.phone": "phone",
+  "forgetPassword.title": "forget Password",
+  "reset.password": "reset password"
 }

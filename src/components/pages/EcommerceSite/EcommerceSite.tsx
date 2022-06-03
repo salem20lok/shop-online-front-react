@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { saveProfile } from "../../../store/ProfileSlice/ProfileSlice";
+import Header from "../../parts/header/header";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Dashboard = () => {
       });
   }, []);
 
-  return <div>Dashboard</div>;
+  return <Header />;
 };
 
 export default Dashboard;

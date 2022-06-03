@@ -11,5 +11,8 @@
   "register.lastName": "lastName",
   "register.phone": "phone",
   "forgetPassword.title": "forget Password",
-  "reset.password": "reset password"
+  "reset.password": "reset password",
+  "Dashboard.title": "Dashboard",
+  "Profile.title": "Profile",
+  "Logout.title": "Logout"
 }

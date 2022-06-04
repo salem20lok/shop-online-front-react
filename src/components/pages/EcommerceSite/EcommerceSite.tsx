@@ -1,13 +1,18 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { saveProfile } from "../../../store/ProfileSlice/ProfileSlice";
+import {
+  removeProfile,
+  saveProfile,
+} from "../../../store/ProfileSlice/ProfileSlice";
 import Header from "../../parts/header/header";
 
-const Dashboard = () => {
+const EcommerceSite = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [connected, setConnected] = useState<boolean>(false);
 
   useEffect(() => {
     axios
@@ -18,14 +23,19 @@ const Dashboard = () => {
       })
       .then(({ data }) => {
         dispatch(saveProfile({ profile: data }));
+        setConnected(true);
       })
       .catch((e) => {
-        navigate("/login");
-        console.log(e.response.data.message);
+        setConnected(false);
+        dispatch(removeProfile());
       });
   }, []);
 
-  return <Header />;
+  const refresh = () => {
+    setConnected(!connected);
+  };
+
+  return <Header connected={connected} refresh={refresh} />;
 };
 
-export default Dashboard;
+export default EcommerceSite;

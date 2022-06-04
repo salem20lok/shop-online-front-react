@@ -29,7 +29,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <IntlProvider locale={"fr"} defaultLocale={"en"} messages={ar}>
+    <IntlProvider locale={"fr"} defaultLocale={"en"} messages={messages}>
       <Provider store={store}>
         <Router>
           <App />

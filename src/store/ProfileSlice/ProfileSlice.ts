@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { saveProfilePayload, UserState } from "./type";
 
 const initialState: UserState = {
-  error: false,
+  error: true,
   loading: false,
   profile: {
     _id: "",
     avatar: "",
     email: "",
-    FirstName: "",
-    LastName: "",
+    firstName: "",
+    lastName: "",
     password: "",
     phone: "",
     role: [],

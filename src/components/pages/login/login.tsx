@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -81,6 +81,21 @@ const Login = () => {
         });
     }
   };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user/identification", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then(() => {
+        navigate("../");
+      })
+      .catch((e) => {
+        console.log(e.response.data.message);
+      });
+  }, []);
 
   return (
     <Grid container className={classes.container}>

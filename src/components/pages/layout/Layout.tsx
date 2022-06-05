@@ -8,8 +8,8 @@ const Layout = () => {
   return (
     <Box>
       <Routes>
-        <Route element={<EcommerceSite />} path="/*" />
         <Route element={<Dashboard />} path="/dashboard/*" />
+        <Route element={<EcommerceSite />} path="/*" />
       </Routes>
     </Box>
   );

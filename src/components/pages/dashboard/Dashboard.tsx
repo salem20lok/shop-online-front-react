@@ -19,7 +19,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { saveProfile } from "../../../store/ProfileSlice/ProfileSlice";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { RootState } from "../../../store";
 import AvatarComponent from "../../parts/header/parts/AvatarComponent/AvatarComponent";
 import HomeIcon from "@mui/icons-material/Home";
@@ -32,6 +38,7 @@ import Categories from "./parts/categories/Categories";
 import Users from "./parts/users/Users";
 import Orders from "./parts/orders/Orders";
 import Products from "./parts/products/Products";
+import { FormattedMessage } from "react-intl";
 
 const drawerWidth = 240;
 
@@ -141,6 +148,8 @@ const Dashboard = () => {
   /*--------------------------------------------------------------------------------------------*/
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const location = pathname.slice(11);
   const [connected, setConnected] = useState<boolean>(false);
   const refresh = () => {
     setConnected(!connected);
@@ -203,7 +212,9 @@ const Dashboard = () => {
 
       <Drawer variant="permanent" open={open}>
         <DrawerHeader sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography>Dashboard</Typography>
+          <Typography>
+            <FormattedMessage id="Dashboard.title" />
+          </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
@@ -226,6 +237,7 @@ const Dashboard = () => {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
+                disabled={location === text.name}
               >
                 <ListItemIcon
                   sx={{
@@ -248,12 +260,12 @@ const Dashboard = () => {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Routes>
-          <Route element={<Home />} path="/dashboard/" />
-          <Route element={<Home />} path="/dashboard/home" />
-          <Route element={<Categories />} path="/dashboard/categories" />
-          <Route element={<Users />} path="/dashboard/users" />
-          <Route element={<Orders />} path="/dashboard/orders" />
-          <Route element={<Products />} path="/dashboard/products" />
+          <Route element={<Home />} path="/" />
+          <Route element={<Home />} path="/home" />
+          <Route element={<Categories />} path="/categories" />
+          <Route element={<Users />} path="/users" />
+          <Route element={<Orders />} path="/orders" />
+          <Route element={<Products />} path="/products" />
         </Routes>
       </Box>
     </Box>

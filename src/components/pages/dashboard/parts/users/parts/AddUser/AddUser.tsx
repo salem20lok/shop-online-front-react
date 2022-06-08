@@ -1,5 +1,13 @@
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { Avatar, Button, OutlinedInput, TextField } from "@mui/material";
+import {
+  Alert,
+  Avatar,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  TextField,
+} from "@mui/material";
 import { forwardRef, MouseEvent, ReactElement, Ref, useState } from "react";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
@@ -15,7 +23,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Input from "@mui/material/Input";
-import { styled } from "@mui/material/styles";
+import axios from "axios";
+import SnackbarSuccess from "../../../../../../parts/SnackbarSuccess/SnackbarSuccess";
+import UploadImage from "../../../../../../parts/uploadImage/UploadImage";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -26,11 +36,14 @@ const Transition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const InputUpload = styled("input")({
-  display: "none",
-});
+const Roles = ["admin", "user"];
 
-const AddUser = () => {
+interface AddUserProps {
+  handleRefresh: Function;
+}
+
+const AddUser = (props: AddUserProps) => {
+  const { handleRefresh } = props;
   const [open, setOpen] = useState<boolean>(false);
 
   const handleClickOpen = () => {
@@ -39,6 +52,17 @@ const AddUser = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setPassword("");
+    setEmail("");
+    setFirstName("");
+    setLastName("");
+    setPhone("");
+    setAvatar("/images/avatar.png");
+    setEmailError(false);
+    setFirstNameError(false);
+    setLastNameError(false);
+    setPhoneError(false);
+    setPasswordError(false);
   };
 
   const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
@@ -47,14 +71,102 @@ const AddUser = () => {
 
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [passwordError, setPasswordError] = useState<boolean>(false);
+
+  const [firstName, setFirstName] = useState<string>("");
+  const [firstNameError, setFirstNameError] = useState<boolean>(false);
+
+  const [lastName, setLastName] = useState<string>("");
+  const [lastNameError, setLastNameError] = useState<boolean>(false);
+
+  const [email, setEmail] = useState<string>("");
+  const [emailError, setEmailError] = useState<boolean>(false);
+
+  const [phone, setPhone] = useState<string>("");
+  const [phoneError, setPhoneError] = useState<boolean>(false);
+
+  const [avatar, setAvatar] = useState("/images/avatar.png");
+
+  const [role, setRole] = useState<string[]>([]);
+
+  const handleCheckBox = (el: string) => {
+    role.includes(el)
+      ? setRole(role.filter((e) => e !== el))
+      : setRole(() => [...role, el]);
+  };
+
+  const handleImage = (e: string) => {
+    setAvatar(e);
+  };
+
+  const [error, setError] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const handleSuccess = () => {
+    setSuccess(false);
+  };
+
+  const handleAddUser = () => {
+    setEmailError(() => email === "");
+    setFirstNameError(() => firstName === "");
+    setLastNameError(() => lastName === "");
+    setPhoneError(() => phone === "");
+    setPasswordError(() => password === "");
+    if (
+      email &&
+      phone &&
+      password &&
+      email &&
+      avatar &&
+      firstName &&
+      lastName
+    ) {
+      axios
+        .post(
+          "http://localhost:3000/user/admin",
+          {
+            firstName: firstName,
+            lastName: lastName,
+            phone: phone,
+            avatar: avatar,
+            password: password,
+            email: email,
+            role: role,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then(({ data }) => {
+          handleRefresh();
+          setError(false);
+          setSuccess(true);
+          handleClose();
+        })
+        .catch((e) => {
+          setError(true);
+          setErrorMsg(e.response.data.message);
+        });
+    }
+  };
 
   return (
     <Box>
+      {success ? (
+        <SnackbarSuccess
+          handleSuccess={handleSuccess}
+          message={<FormattedMessage id="add.user" />}
+        />
+      ) : (
+        ""
+      )}
       <Button
         onClick={handleClickOpen}
         endIcon={<PersonAddAltIcon />}
         sx={{ mb: 2 }}
-        variant="outlined"
       >
         Add User
       </Button>
@@ -69,6 +181,18 @@ const AddUser = () => {
       >
         <DialogTitle>{" Add user ?"}</DialogTitle>
         <DialogContent>
+          {error ? (
+            <Alert
+              severity="error"
+              onClose={() => {
+                setError(false);
+              }}
+            >
+              {errorMsg}!
+            </Alert>
+          ) : (
+            ""
+          )}
           <form
             onSubmit={(e) => e.preventDefault()}
             autoComplete="off"
@@ -84,88 +208,75 @@ const AddUser = () => {
               <Avatar
                 sx={{ height: 50, width: 50, mr: 2 }}
                 alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
+                src={avatar}
               />
-              <FormControl
-                fullWidth
-                required
-                margin="normal"
-                variant="outlined"
-              >
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Password
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={"text"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        edge="end"
-                      >
-                        <label htmlFor="contained-button-file">
-                          <InputUpload
-                            accept="image/*"
-                            id="contained-button-file"
-                            multiple
-                            type="file"
-                          />
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
-                />
-              </FormControl>
+              <UploadImage
+                name={"add"}
+                handleImage={handleImage}
+                avatar={avatar}
+              />
             </Box>
 
             <TextField
-              id="standard-basic"
               label={<FormattedMessage id="register.firstName" />}
               variant="standard"
               fullWidth
               margin="normal"
+              error={firstNameError}
               required
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
             />
             <TextField
-              id="standard-basic"
               label={<FormattedMessage id="register.lastName" />}
               variant="standard"
               fullWidth
               margin="normal"
               required
+              error={lastNameError}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
             <TextField
-              id="standard-basic"
+              type="tel"
               label={<FormattedMessage id="register.phone" />}
               variant="standard"
               fullWidth
               margin="normal"
+              error={phoneError}
               required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
             <TextField
-              id="standard-basic"
+              type="email"
               label={<FormattedMessage id="login.email" />}
               variant="standard"
               fullWidth
               margin="normal"
               required
+              error={emailError}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <FormControl margin="normal" required fullWidth variant="standard">
-              <InputLabel htmlFor="standard-adornment-password">
+            <FormControl
+              margin="normal"
+              required
+              fullWidth
+              error={passwordError}
+              variant="standard"
+            >
+              <InputLabel required htmlFor="standard-adornment-password">
                 <FormattedMessage id="login.password" />
               </InputLabel>
               <Input
-                id="standard-adornment-password"
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
+                error={passwordError}
+                required
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -179,11 +290,32 @@ const AddUser = () => {
                 }
               />
             </FormControl>
+            <FormGroup row sx={{ mt: 2 }}>
+              {Roles.map((el, e) => {
+                return (
+                  <FormControlLabel
+                    checked={role.includes(el)}
+                    onChange={() => handleCheckBox(el)}
+                    control={<Checkbox />}
+                    label={el}
+                    key={e}
+                  />
+                );
+              })}
+            </FormGroup>
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button>
+          <Button onClick={handleClose}>
+            <FormattedMessage id="canceled" />
+          </Button>
+          <Button
+            onClick={() => {
+              handleAddUser();
+            }}
+          >
+            <FormattedMessage id="confirmed" />
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

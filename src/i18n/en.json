@@ -14,5 +14,18 @@
   "reset.password": "reset password",
   "Dashboard.title": "Dashboard",
   "Profile.title": "Profile",
-  "Logout.title": "Logout"
+  "Logout.title": "Logout",
+  "FullName": "FullName",
+  "Phone": "Phone",
+  "Role": "Roles",
+  "Upload": "Upload",
+  "avatar": "avatar",
+  "supreme.user.successfully": "deleted user successfully",
+  "Delete": "Delete",
+  "q.delete": "Are you serious about deleting this User?",
+  "canceled": "canceled",
+  "confirmed": "confirmed",
+  "add.user": "UUser added successfully",
+  "Confirm.update": "Confirm success update",
+  "Update": "Update"
 }

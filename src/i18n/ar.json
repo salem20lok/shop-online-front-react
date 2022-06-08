@@ -14,5 +14,18 @@
   "reset.password": "إعادة تعيين كلمة المرور",
   "Dashboard.title": "لوحة القيادة",
   "Profile.title": "الملف الشخصي",
-  "Logout.title": "تسجيل خروج"
+  "Logout.title": "تسجيل خروج",
+  "FullName": "الاسم الكامل",
+  "Phone": "الهاتف",
+  "Role": "الأدوار",
+  "avatar": "الصورة الرمزية",
+  "supreme.user.successfully": "تم حذف المستخدم بنجاح",
+  "Upload": "تحميل",
+  "Delete": "حذف",
+  "q.delete": "هل أنت جاد في حذف هذا المستخدم؟",
+  "canceled": "ألغيت",
+  "confirmed": "تم تأكيد",
+  "add.user": "تمت إضافة المستخدم بنجاح",
+  "Confirm.update": "تأكيد التحديث بنجاح",
+  "Update": "تحديث"
 }

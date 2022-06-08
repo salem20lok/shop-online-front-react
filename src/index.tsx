@@ -27,6 +27,7 @@ const messages: Record<string, string> = allMessages[userLang];
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <IntlProvider locale={"fr"} defaultLocale={"en"} messages={messages}>

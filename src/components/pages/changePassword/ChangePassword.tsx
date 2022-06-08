@@ -151,7 +151,7 @@ const ChangePassword = () => {
               variant="outlined"
               required
             >
-              <InputLabel htmlFor="outlined-adornment-password">
+              <InputLabel>
                 <FormattedMessage id="login.password" />
               </InputLabel>
               <OutlinedInput
@@ -180,7 +180,7 @@ const ChangePassword = () => {
               variant="outlined"
               required
             >
-              <InputLabel htmlFor="outlined-adornment-password">
+              <InputLabel>
                 <FormattedMessage id="login.password" />
               </InputLabel>
               <OutlinedInput

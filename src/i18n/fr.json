@@ -14,5 +14,18 @@
   "reset.password": "change mot de passe",
   "Dashboard.title": "Tableau de bord",
   "Profile.title": "Profile",
-  "Logout.title": "Se déconnecter"
+  "Logout.title": "Se déconnecter",
+  "FullName": "Nom complet",
+  "Phone": "Téléphone",
+  "Role": "Rôle",
+  "avatar": "avatar",
+  "supreme.user.successfully": "utilisateur suprime avec succès",
+  "Upload": "Télécharger",
+  "Delete": "Supprimer",
+  "q.delete": "Êtes-vous sérieux au sujet de la suppression de ce User ?",
+  "canceled": "annulé",
+  "confirmed": "تم تأكيد",
+  "add.user": "Utilisateur ajouté avec succès",
+  "Confirm.update": "Confirmer la réussite de la mise à jour",
+  "Update": "Mettre à jour"
 }

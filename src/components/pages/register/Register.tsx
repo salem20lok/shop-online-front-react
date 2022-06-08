@@ -202,11 +202,10 @@ const Register = () => {
               error={passwordError}
               margin="normal"
             >
-              <InputLabel htmlFor="outlined-adornment-password">
+              <InputLabel>
                 <FormattedMessage id="login.password" />
               </InputLabel>
               <OutlinedInput
-                id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

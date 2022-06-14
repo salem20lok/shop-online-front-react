@@ -167,6 +167,7 @@ const AddUser = (props: AddUserProps) => {
         onClick={handleClickOpen}
         endIcon={<PersonAddAltIcon />}
         sx={{ mb: 2 }}
+        variant="outlined"
       >
         Add User
       </Button>

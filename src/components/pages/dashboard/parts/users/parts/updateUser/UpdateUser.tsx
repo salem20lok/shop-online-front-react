@@ -20,6 +20,8 @@ import UploadImage from "../../../../../../parts/uploadImage/UploadImage";
 import { FormattedMessage } from "react-intl";
 import axios from "axios";
 import SnackbarSuccess from "../../../../../../parts/SnackbarSuccess/SnackbarSuccess";
+import BrowserUpdatedIcon from "@mui/icons-material/BrowserUpdated";
+import Typography from "@mui/material/Typography";
 
 interface UpdateUserProps {
   handleRefresh: Function;
@@ -150,8 +152,11 @@ const UpdateUser = (props: UpdateUserProps) => {
         onClick={() => {
           handleClickOpen();
         }}
+        endIcon={<BrowserUpdatedIcon />}
       >
-        <FormattedMessage id={"Update"} />
+        <Typography noWrap>
+          <FormattedMessage id={"Update"} />
+        </Typography>
       </Button>
       <Dialog fullWidth open={open} onClose={handleClose}>
         <DialogTitle>Subscribe</DialogTitle>

@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 
 import ProfileReducer from "./ProfileSlice/ProfileSlice";
 import UsersReducer from "./UsersSlice/UsersSlice";
+import ProductsReducer from "./ProductsSlice/ProductsSlice";
 
 export const store = configureStore({
   reducer: {
     profile: ProfileReducer,
     users: UsersReducer,
+    products: ProductsReducer,
   },
   middleware: [thunkMiddleware],
 });

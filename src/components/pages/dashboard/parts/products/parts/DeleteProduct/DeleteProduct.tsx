@@ -1,20 +1,28 @@
-import { forwardRef, ReactElement, Ref, useState } from "react";
+import Box from "@mui/material/Box";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Typography from "@mui/material/Typography";
+import { FormattedMessage } from "react-intl";
 import Button from "@mui/material/Button";
+import { makeStyles } from "@mui/styles";
+import Slide from "@mui/material/Slide";
+import { forwardRef, ReactElement, Ref, useState } from "react";
+import { TransitionProps } from "@mui/material/transitions";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
-import { TransitionProps } from "@mui/material/transitions";
-import { makeStyles } from "@mui/styles";
-import UserType from "../../../../../../../@Types/UserType";
+import DialogActions from "@mui/material/DialogActions";
+import ProductsType from "../../../../../../../@Types/ProductsType";
 import axios from "axios";
 import SnackbarSuccess from "../../../../../../parts/SnackbarSuccess/SnackbarSuccess";
 import { Alert } from "@mui/material";
-import { FormattedMessage } from "react-intl";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Typography from "@mui/material/Typography";
+
+const useStyles = makeStyles({
+  button: {
+    borderBottomRightRadius: 0,
+    borderTopRightRadius: 0,
+  },
+});
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -25,22 +33,15 @@ const Transition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const useStyles = makeStyles({
-  button: {
-    borderBottomRightRadius: 0,
-    borderTopRightRadius: 0,
-  },
-});
-
-interface DeleteUser {
-  user: UserType;
+interface DeleteProductProps {
+  product: ProductsType;
   handleRefresh: Function;
 }
 
-const DeleteUser = (props: DeleteUser) => {
-  const { user, handleRefresh } = props;
+const DeleteProduct = (props: DeleteProductProps) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const { product, handleRefresh } = props;
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,41 +51,42 @@ const DeleteUser = (props: DeleteUser) => {
     setOpen(false);
   };
 
+  const [error, setError] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
+
   const handleSuccess = () => {
     setSuccess(false);
   };
 
-  const [error, setError] = useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string>("");
-
-  const HandleDelete = () => {
+  const handleDelete = () => {
     axios
-      .delete(`http://localhost:3000/user/${user._id}`, {
+      .delete("http://localhost:3000/product/" + product._id, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
         },
       })
       .then(() => {
-        setSuccess(true);
         setError(false);
+        setSuccess(true);
         setTimeout(() => {
           handleClose();
           handleRefresh();
         }, 50);
       })
       .catch((e) => {
-        setError(true);
         setErrorMsg(e.response.data.message);
+        setError(true);
+        setSuccess(false);
       });
   };
 
   return (
-    <div>
+    <Box>
       {success ? (
         <SnackbarSuccess
           handleSuccess={handleSuccess}
-          message={<FormattedMessage id="supreme.user.successfully" />}
+          message={`deleted ${product.name} successfuly`}
         />
       ) : (
         ""
@@ -99,49 +101,41 @@ const DeleteUser = (props: DeleteUser) => {
         </Typography>
       </Button>
       <Dialog
+        fullWidth
         open={open}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
-        fullWidth
       >
-        <DialogTitle>
-          <FormattedMessage id="Delete" />
-          {user.firstName} {user.lastName} ?
-        </DialogTitle>
-        {error ? (
-          <Alert
-            onClose={() => {
-              setError(false);
-            }}
-          >
-            {errorMsg}!
-          </Alert>
-        ) : (
-          ""
-        )}
+        <DialogTitle> suprimer proudit : {product.name} </DialogTitle>
         <DialogContent>
+          {error ? (
+            <Alert
+              onClose={() => {
+                setError(false);
+              }}
+            >
+              {errorMsg}!
+            </Alert>
+          ) : (
+            ""
+          )}
           <DialogContentText id="alert-dialog-slide-description">
-            <FormattedMessage id="q.delete" />
+            Êtes-vous sûr de pouvoir suprimer ce produit ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button color="success" onClick={handleClose}>
             <FormattedMessage id="canceled" />
           </Button>
-          <Button
-            color="error"
-            onClick={() => {
-              HandleDelete();
-            }}
-          >
+          <Button color="error" onClick={handleDelete}>
             <FormattedMessage id="confirmed" />
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 
-export default DeleteUser;
+export default DeleteProduct;

@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import DialogActions from "@mui/material/DialogActions";
 import ListItemButton from "@mui/material/ListItemButton";
 import axios from "axios";
+import { pink } from "@mui/material/colors";
 
 const Input = styled("input")({
   display: "none",
@@ -87,7 +88,7 @@ const SimpleDialog = (props: SimpleDialogProps) => {
                         edge="end"
                         aria-label="delete"
                       >
-                        <DeleteIcon />
+                        <DeleteIcon sx={{ color: pink[500] }} />
                       </IconButton>
                     }
                   >
